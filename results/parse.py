@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import logging
+from county_code_conversion import ocd_to_name
 
 def printData(data):
     for county,races in data.items():
@@ -56,4 +57,10 @@ def parse():
                 votes_diff = ((votes_r-votes_d)/vote_sum)*100
                 lean[county][year]=votes_diff
                 #print("        R-D Point Difference: %.2f" % votes_diff+"%")
+    
+    for key in lean.keys():
+        lean[key]['id'] = key
+        lean[key]['name'] = ocd_to_name(key)
+        print(lean[key])
+
     return lean
